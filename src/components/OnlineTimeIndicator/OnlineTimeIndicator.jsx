@@ -1,12 +1,13 @@
 import React from 'react';
 import Utility from '@/libs/utility';
 import { useOnlineTime } from '@/hooks/useOnlineTime';
+import classNames from 'classnames';
 
-import classes from './OnlineTimeIndicator.module.css';
-
-export const OnlineTimeIndicator = () => {
+export const OnlineTimeIndicator = React.memo(() => {
   const { onlineTime } = useOnlineTime();
   return (
-    <div className={classes.onlineTimeIndicator}>Online Time: {Utility.formatTime(onlineTime)}</div>
+    <div className={classNames('text-center', 'cite', 'm-2')}>
+      Online Time: <span className='time'>{Utility.formatTime(onlineTime)}</span>
+    </div>
   );
-};
+});

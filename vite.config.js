@@ -13,7 +13,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     server: {
-      port: 405,
+      port: 4005,
       open: true,
     },
     build: {

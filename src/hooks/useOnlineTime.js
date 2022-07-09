@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useOnlineTime = () => {
   const [onlineTime, setOnlineTime] = useState(0);
