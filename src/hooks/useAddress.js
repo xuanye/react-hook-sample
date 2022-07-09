@@ -1,77 +1,102 @@
-import React, { useMemo, useState } from 'react';
+import React, { useId, useMemo, useState } from 'react';
 import { SortType } from '@/config/constants';
 import utility from '@/libs/utility';
+import { createModel } from 'hox';
 
 const initialAddressList = [
-  { name: 'Tom', email: 'Tom@tiok.com', address: 'Shanghai', status: 0 },
-  { name: 'David', email: 'David@tiok.com', address: 'Beijing', status: 0 },
-  { name: 'Crown', email: 'Crown@tiok.com', address: 'Guangzhou', status: 0 },
-  { name: 'Aron', email: 'Aron@tiok.com', address: 'Chongqing', status: 0 },
+  { id: '1', name: 'Tom', email: 'Tom@tiok.com', address: 'Shanghai', status: 0 },
+  { id: '2', name: 'David', email: 'David@tiok.com', address: 'Beijing', status: 0 },
+  { id: '3', name: 'Crown', email: 'Crown@tiok.com', address: 'Guangzhou', status: 0 },
+  { id: '4', name: 'Aron', email: 'Aron@tiok.com', address: 'Chongqing', status: 0 },
 ];
-export const useAddress = () => {
+
+const useAddress = () => {
+  const [editMode, setEditMode] = useState(false);
   const [sortType, setSortType] = useState(0);
   const [addressList, setAddressList] = useState(initialAddressList);
+
+  const { ascCompare, descCompare, generateId } = utility;
 
   const sortedList = useMemo(() => {
     switch (sortType) {
       case SortType.Asc:
-        return addressList.sort(utility.ascCompare);
+        return [...addressList.sort(ascCompare)];
       case SortType.Desc:
-        return addressList.sort(utility.descCompare);
+        return [...addressList.sort(descCompare)];
       default:
         return addressList;
     }
   }, [sortType, addressList]);
 
   const startAddItem = data => {
-    setAddressList([...addressList, data || { name: '', email: '', address: '', status: 1 }]);
+    setEditMode(true);
+
+    setAddressList(list => [
+      ...list,
+      data || { id: generateId(), name: '', email: '', address: '', status: 1 },
+    ]);
   };
   const removeItem = index => {
-    addressList.splice(index, 1);
-    setAddressList([...addressList]);
+    setAddressList(list => {
+      list.splice(index, 1);
+      return [...list];
+    });
   };
 
   const startEditItem = index => {
-    const newList = addressList.map((item, i) => {
-      item.status = i == index ? 2 : 0;
-      return item;
+    setEditMode(true);
+
+    setAddressList(list => {
+      return list.map((item, i) => {
+        item.status = i == index ? 2 : 0;
+        return item;
+      });
     });
-    setAddressList(newList);
   };
 
   const confirmEditItem = (index, data) => {
-    const newList = addressList.map((item, i) => {
-      item.status = 0;
-      if (i == index) {
-        item.name = data.name;
-        item.email = data.email;
-        item.address = data.address;
-      }
-      return item;
+    setAddressList(list => {
+      return list.map((item, i) => {
+        item.status = 0;
+        if (i == index) {
+          item.name = data.name;
+          item.email = data.email;
+          item.address = data.address;
+        }
+        return item;
+      });
     });
-    setAddressList(newList);
+    setEditMode(false);
   };
 
   const cancelSaveItem = data => {
     if (data.status == 1) {
-      addressList.splice(state.list.length - 1, 1);
       //新增
-      setAddressList([...addressList]);
-    } else {
-      const newList = addressList.map((item, i) => {
-        item.status = 0;
-        return item;
+      setAddressList(list => {
+        list.splice(list.length - 1, 1);
+        return [...list];
       });
-      setAddressList(newList);
+    } else {
+      setAddressList(list => {
+        return list.map((item, i) => {
+          item.status = 0;
+          return item;
+        });
+      });
     }
+    setEditMode(false);
   };
 
   return {
+    editMode,
     setSortType,
     addressList: sortedList,
     startAddItem,
     removeItem,
     startEditItem,
     cancelSaveItem,
+    confirmEditItem,
   };
 };
+
+export default createModel(useAddress);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useAddress } from '@/hooks/useAddress';
+import useAddress from '@/hooks/useAddress';
 import AddressItem from './AddressItem';
 import AddressForm from './AddressForm';
 
@@ -8,12 +8,7 @@ import classes from './index.module.css';
 import classNames from 'classnames';
 
 export const AddressGrid = () => {
-  const { addressList } = useAddress();
-
-  const handleEdit = index => {};
-  const handleRemove = index => {};
-  const handleSave = (index, data) => {};
-  const handleCancel = (index, data) => {};
+  const { addressList } = useAddress(model => [model.addressList]);
 
   const itemList = addressList.map((item, i) => {
     /*
@@ -26,9 +21,9 @@ export const AddressGrid = () => {
         }
         */
     if (item.status == 0) {
-      return <AddressItem key={item.email} item={item} index={i} markText={''}></AddressItem>;
+      return <AddressItem key={item.id} item={item} index={i} markText={''}></AddressItem>;
     } else {
-      return <AddressForm key={item.email} item={item} index={i}></AddressForm>;
+      return <AddressForm key={item.id} item={item} index={i}></AddressForm>;
     }
   });
 

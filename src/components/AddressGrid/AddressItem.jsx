@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import classes from './index.module.css';
 import classNames from 'classnames';
 import { MarkText } from '../MarkText';
+import useAddress from '@/hooks/useAddress';
 
 const AddressItem = ({ item, markText, index }) => {
+  const { startEditItem, removeItem, editMode } = useAddress(model => [
+    model.startEditItem,
+    model.removeItem,
+    model.editMode,
+  ]);
   const { name, address, email } = item;
   const firstLetter = name[0].toUpperCase();
-  const handleEdit = () => {};
-  const handleRemove = () => {};
+
+  const handleEdit = useCallback(() => {
+    startEditItem(index);
+  }, [startEditItem, index]);
+
+  const handleRemove = useCallback(() => {
+    if (confirm('confirm remove this item?')) removeItem(index);
+  }, [removeItem, index]);
+
   return (
     <div className={classNames(classes.card)}>
       <div>
@@ -29,12 +42,14 @@ const AddressItem = ({ item, markText, index }) => {
         <button
           className={classNames('btn', 'mx-1', 'my-2')}
           style={{ minWidth: '80px' }}
+          disabled={editMode}
           onClick={handleEdit}>
           Edit
         </button>
         <button
-          className={classNames('btn', 'mx-1', 'my-2')}
+          className={classNames('btn', 'btn-link', 'mx-1', 'my-2')}
           style={{ minWidth: '80px' }}
+          disabled={editMode}
           onClick={handleRemove}>
           Remove
         </button>
