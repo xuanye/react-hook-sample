@@ -1,6 +1,9 @@
-const { useState } = require('react');
+import { useEffect, useState } from 'react';
 
-export const useFilterText = () => {
+import { createModel } from 'hox';
+import useAddress from './useAddress';
+
+const useFilterText = () => {
   const [filterText, setFilterText] = useState('');
 
   return {
@@ -8,3 +11,5 @@ export const useFilterText = () => {
     setFilterText,
   };
 };
+
+export default createModel(useFilterText);

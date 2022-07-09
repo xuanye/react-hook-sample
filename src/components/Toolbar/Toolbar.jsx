@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
+import useFilterText from '@/hooks/useFilterText';
 
 export const Toolbar = () => {
   const { startAddItem, setSortType, editMode } = useAddress(model => [
@@ -9,7 +10,13 @@ export const Toolbar = () => {
     model.setSortType,
     model.editMode,
   ]);
+  const { filterText, setFilterText } = useFilterText();
 
+  useEffect(() => {
+    if (editMode) {
+      setFilterText('');
+    }
+  }, [setFilterText, editMode]);
   const handlerAscSort = useCallback(() => {
     setSortType(1);
   }, [setSortType]);
@@ -44,6 +51,10 @@ export const Toolbar = () => {
             className={classNames('form-input')}
             style={{ maxWidth: '300px' }}
             type='text'
+            value={filterText}
+            onChange={e => {
+              setFilterText(e.target.value || '');
+            }}
             disabled={editMode}
             placeholder='filter'
           />
