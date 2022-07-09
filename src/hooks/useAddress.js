@@ -3,6 +3,8 @@ import { SortType } from '@/config/constants';
 import utility from '@/libs/utility';
 import { createModel } from 'hox';
 
+const { ascCompare, descCompare, generateId } = utility;
+
 const initialAddressList = [
   { id: '1', name: 'Tom', email: 'Tom@tiok.com', address: 'Shanghai', status: 0 },
   { id: '2', name: 'David', email: 'David@tiok.com', address: 'Beijing', status: 0 },
@@ -14,8 +16,6 @@ const useAddress = () => {
   const [editMode, setEditMode] = useState(false);
   const [sortType, setSortType] = useState(0);
   const [addressList, setAddressList] = useState(initialAddressList);
-
-  const { ascCompare, descCompare, generateId } = utility;
 
   const sortedList = useMemo(() => {
     switch (sortType) {

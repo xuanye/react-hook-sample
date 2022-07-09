@@ -46,4 +46,14 @@ export default {
   generateId() {
     return new Date().getTime().toString();
   },
+  contains(source, search) {
+    if (!source) {
+      return false;
+    }
+    if (!search) {
+      return true;
+    }
+
+    return source.toLowerCase().indexOf(search.toLowerCase()) >= 0;
+  },
 };

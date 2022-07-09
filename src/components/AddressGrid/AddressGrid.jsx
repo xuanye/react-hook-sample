@@ -8,6 +8,10 @@ import classes from './index.module.css';
 import classNames from 'classnames';
 import useFilterText from '@/hooks/useFilterText';
 
+import utility from '@/libs/utility';
+
+const { contains } = utility;
+
 export const AddressGrid = () => {
   const { addressList } = useAddress(model => [model.addressList]);
   const { filterText } = useFilterText(model => [model.filterText]);
@@ -18,9 +22,9 @@ export const AddressGrid = () => {
       let show = true;
       if (filterText) {
         show =
-          item.name.indexOf(filterText) >= 0 ||
-          item.email.indexOf(filterText) >= 0 ||
-          item.address.indexOf(filterText) >= 0;
+          contains(item.name, filterText) ||
+          contains(item.email, filterText) ||
+          contains(item.address, filterText);
       }
       if (!show) {
         return null;
