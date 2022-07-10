@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import classes from './index.module.css';
 import classNames from 'classnames';
 import { MarkText } from '../MarkText';

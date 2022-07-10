@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import classes from './index.module.css';
 import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
@@ -35,7 +35,7 @@ const AddressForm = ({ item, index }) => {
       <form className='form-horizontal' onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <div className='col-4 col-sm-12'>
-            <label className='form-label' htmlFor='input-name'>
+            <label className='form-label' htmlFor='name'>
               Name:
             </label>
           </div>
@@ -52,7 +52,9 @@ const AddressForm = ({ item, index }) => {
         </div>
         <div className='form-group'>
           <div className='col-4 col-sm-12'>
-            <label className='form-label'>Location:</label>
+            <label className='form-label' htmlFor='address'>
+              Location:
+            </label>
           </div>
           <div className='col-8 col-sm-12'>
             <select
@@ -75,7 +77,9 @@ const AddressForm = ({ item, index }) => {
         </div>
         <div className='form-group'>
           <div className='col-4 col-sm-12'>
-            <label className='form-label'>Email:</label>
+            <label className='form-label' htmlFor='email'>
+              Email:
+            </label>
           </div>
           <div className='col-8 col-sm-12'>
             <input

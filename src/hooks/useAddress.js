@@ -1,5 +1,5 @@
-import React, { useId, useMemo, useState } from 'react';
-import { SortType } from '@/config/constants';
+import { useMemo, useState } from 'react';
+import { ItemState, SortType } from '@/config/constants';
 import utility from '@/libs/utility';
 import { createModel } from 'hox';
 
@@ -57,7 +57,7 @@ const useAddress = () => {
   const confirmEditItem = (index, data) => {
     setAddressList(list => {
       return list.map((item, i) => {
-        item.status = 0;
+        item.status = ItemState.Default;
         if (i == index) {
           item.name = data.name;
           item.email = data.email;
@@ -70,7 +70,7 @@ const useAddress = () => {
   };
 
   const cancelSaveItem = data => {
-    if (data.status == 1) {
+    if (data.status == ItemState.AddNew) {
       //新增
       setAddressList(list => {
         list.splice(list.length - 1, 1);
@@ -78,7 +78,7 @@ const useAddress = () => {
       });
     } else {
       setAddressList(list => {
-        return list.map((item, i) => {
+        return list.map(item => {
           item.status = 0;
           return item;
         });

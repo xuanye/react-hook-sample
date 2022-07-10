@@ -5,7 +5,7 @@ export const useOnlineTime = () => {
 
   useEffect(() => {
     const ticker = setTimeout(() => {
-      setOnlineTime(onlineTime + 1);
+      setOnlineTime(state => state + 1);
     }, 1000);
 
     return () => {

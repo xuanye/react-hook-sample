@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 export const MarkText = memo(({ originalText, markText }) => {
   const result = useMemo(() => {
@@ -38,3 +38,5 @@ export const MarkText = memo(({ originalText, markText }) => {
   }, [originalText, markText]);
   return <div>{result}</div>;
 });
+
+MarkText.displayName = 'MarkText';

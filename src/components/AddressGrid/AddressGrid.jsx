@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import useAddress from '@/hooks/useAddress';
 import AddressItem from './AddressItem';
@@ -16,29 +16,24 @@ export const AddressGrid = () => {
   const { addressList } = useAddress(model => [model.addressList]);
   const { filterText } = useFilterText(model => [model.filterText]);
 
-  const itemList = useMemo(() => {
-    return addressList.map((item, i) => {
-      /* */
-      let show = true;
-      if (filterText) {
-        show =
-          contains(item.name, filterText) ||
-          contains(item.email, filterText) ||
-          contains(item.address, filterText);
-      }
-      if (!show) {
-        return null;
-      }
+  const itemList = addressList.map((item, i) => {
+    let show = true;
+    if (filterText) {
+      show =
+        contains(item.name, filterText) ||
+        contains(item.email, filterText) ||
+        contains(item.address, filterText);
+    }
+    if (!show) {
+      return null;
+    }
 
-      if (item.status == 0) {
-        return (
-          <AddressItem key={item.id} item={item} index={i} markText={filterText}></AddressItem>
-        );
-      } else {
-        return <AddressForm key={item.id} item={item} index={i}></AddressForm>;
-      }
-    });
-  }, [addressList, filterText]);
+    if (item.status == 0) {
+      return <AddressItem key={item.id} item={item} index={i} markText={filterText}></AddressItem>;
+    } else {
+      return <AddressForm key={item.id} item={item} index={i}></AddressForm>;
+    }
+  });
 
   return <div className={classNames(classes.cards, 'm-2', 'p-2')}>{itemList}</div>;
 };

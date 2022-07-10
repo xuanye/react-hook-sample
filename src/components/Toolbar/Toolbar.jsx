@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
@@ -17,12 +17,12 @@ export const Toolbar = () => {
       setFilterText('');
     }
   }, [setFilterText, editMode]);
-  const handlerAscSort = useCallback(() => {
+  const handlerAscSort = () => {
     setSortType(1);
-  }, [setSortType]);
-  const handlerDescSort = useCallback(() => {
+  };
+  const handlerDescSort = () => {
     setSortType(2);
-  }, [setSortType]);
+  };
   return (
     <div className='container'>
       <div className={classNames('columns')}>
@@ -56,7 +56,7 @@ export const Toolbar = () => {
               setFilterText(e.target.value || '');
             }}
             disabled={editMode}
-            placeholder='filter'
+            placeholder='Filter text'
           />
         </div>
       </div>
