@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import classes from './index.module.css';
 import classNames from 'classnames';
 import { MarkText } from '../MarkText';
@@ -13,13 +13,13 @@ const AddressItem = ({ item, markText, index }) => {
   const { name, address, email } = item;
   const firstLetter = name[0].toUpperCase();
 
-  const handleEdit = useCallback(() => {
+  const handleEdit = () => {
     startEditItem(index);
-  }, [startEditItem, index]);
+  };
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (confirm('confirm remove this item?')) removeItem(index);
-  }, [removeItem, index]);
+  };
 
   return (
     <div className={classNames(classes.card)}>

@@ -30,7 +30,8 @@ export default defineConfig(({ command, mode }) => {
     },
     test: {
       /* for example, use global to avoid globals imports (describe, test, expect):
-        globals: true, */
+       */
+      globals: false,
       environment: 'happy-dom',
     },
   };

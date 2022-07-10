@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import classes from './index.module.css';
 import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
@@ -19,16 +19,10 @@ const AddressForm = ({ item, index }) => {
     defaultValues: item,
   });
 
-  const onSubmit = useCallback(
-    data => {
-      //console.log('🚀 ~ file: AddressForm.jsx ~ line 20 ~ AddressForm ~ data', data);
-      confirmEditItem(index, data);
-    },
-    [index],
-  );
-  const handleCancel = useCallback(() => {
-    cancelSaveItem(item);
-  }, [item]);
+  const onSubmit = data => {
+    confirmEditItem(index, data);
+  };
+  const handleCancel = () => cancelSaveItem(item);
 
   return (
     <div className={classNames(classes.card)}>
