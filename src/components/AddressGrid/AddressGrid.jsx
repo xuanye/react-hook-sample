@@ -1,18 +1,17 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
+import useFilterText from '@/hooks/useFilterText';
+import utility from '@/libs/utility';
 import AddressItem from './AddressItem';
 import AddressForm from './AddressForm';
 
 import classes from './index.module.css';
-import classNames from 'classnames';
-import useFilterText from '@/hooks/useFilterText';
-
-import utility from '@/libs/utility';
 
 const { contains } = utility;
 
-export const AddressGrid = () => {
+export function AddressGrid() {
   const { addressList } = useAddress(model => [model.addressList]);
   const { filterText } = useFilterText(model => [model.filterText]);
 
@@ -28,12 +27,11 @@ export const AddressGrid = () => {
       return null;
     }
 
-    if (item.status == 0) {
-      return <AddressItem key={item.id} item={item} index={i} markText={filterText}></AddressItem>;
-    } else {
-      return <AddressForm key={item.id} item={item} index={i}></AddressForm>;
+    if (item.status === 0) {
+      return <AddressItem key={item.id} item={item} index={i} markText={filterText} />;
     }
+    return <AddressForm key={item.id} item={item} index={i} />;
   });
 
   return <div className={classNames(classes.cards, 'm-2', 'p-2')}>{itemList}</div>;
-};
+}

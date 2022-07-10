@@ -1,11 +1,12 @@
 import React from 'react';
-import classes from './index.module.css';
 import classNames from 'classnames';
-import useAddress from '@/hooks/useAddress';
 import { useForm } from 'react-hook-form';
+import useAddress from '@/hooks/useAddress';
+
+import classes from './index.module.css';
 
 const addressList = ['', 'Shanghai', 'Chengdu', 'Beijing', 'Chongqing', 'Guangzhou'];
-const AddressForm = ({ item, index }) => {
+function AddressForm({ item, index }) {
   const { confirmEditItem, cancelSaveItem } = useAddress(model => [
     model.cancelSaveItem,
     model.confirmEditItem,
@@ -53,13 +54,17 @@ const AddressForm = ({ item, index }) => {
           <div className='col-8 col-sm-12'>
             <select
               className={classNames('form-select', errors.address ? 'is-error' : null)}
-              {...register('address', { required: true })}>
+              {...register('address', { required: true })}
+            >
               {addressList.map(address => {
-                return !address ? (
-                  <option value='' key='please choose'>
-                    Choose an option
-                  </option>
-                ) : (
+                if (!address) {
+                  return (
+                    <option value='' key='please choose'>
+                      Choose an option
+                    </option>
+                  );
+                }
+                return (
                   <option key={address} value={address}>
                     {address}
                   </option>
@@ -94,19 +99,22 @@ const AddressForm = ({ item, index }) => {
           <button
             className={classNames('btn', 'btn-primary', 'mx-1', 'my-2')}
             style={{ minWidth: '80px' }}
-            type='submit'>
+            type='submit'
+          >
             Save
           </button>
           <button
+            type='button'
             className={classNames('btn', 'btn-link', 'mx-1', 'my-2')}
             style={{ minWidth: '80px' }}
-            onClick={handleCancel}>
+            onClick={handleCancel}
+          >
             Cancel
           </button>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default AddressForm;

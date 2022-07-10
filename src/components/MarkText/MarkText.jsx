@@ -9,8 +9,8 @@ export const MarkText = memo(({ originalText, markText }) => {
       return originalText;
     }
 
-    //const re = new RegExp(markText, 'ig');
-    //return originalText.replace(re, `<mark>${markText}</mark>`);
+    // const re = new RegExp(markText, 'ig');
+    // return originalText.replace(re, `<mark>${markText}</mark>`);
 
     const index = originalText.toLowerCase().indexOf(markText.toLowerCase());
 
@@ -18,8 +18,8 @@ export const MarkText = memo(({ originalText, markText }) => {
       return originalText;
     }
 
-    const length = markText.length;
-    if (index == 0) {
+    const { length } = markText;
+    if (index === 0) {
       return (
         <>
           <mark>{originalText.substr(0, length)}</mark>

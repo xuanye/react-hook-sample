@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import useAddress from '@/hooks/useAddress';
 import useFilterText from '@/hooks/useFilterText';
 
-export const Toolbar = () => {
+export function Toolbar() {
   const { startAddItem, setSortType, editMode } = useAddress(model => [
     model.startAddItem,
     model.setSortType,
@@ -28,18 +28,22 @@ export const Toolbar = () => {
       <div className={classNames('columns')}>
         <div className={classNames('column', 'col-6', 'text-right')}>
           <button
+            type='button'
             className={classNames('btn', 'mx-1')}
             disabled={editMode}
             onClick={() => startAddItem()}>
             Add New
           </button>
+
           <button
+            type='button'
             className={classNames('btn', 'mx-1')}
             disabled={editMode}
             onClick={handlerAscSort}>
             A-Z ↑
           </button>
           <button
+            type='button'
             className={classNames('btn', 'mx-1')}
             disabled={editMode}
             onClick={handlerDescSort}>
@@ -62,4 +66,4 @@ export const Toolbar = () => {
       </div>
     </div>
   );
-};
+}

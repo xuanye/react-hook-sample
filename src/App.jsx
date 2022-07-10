@@ -1,10 +1,10 @@
 import React from 'react';
+import classNames from 'classnames';
 import { OnlineTimeIndicator } from '@/components/OnlineTimeIndicator';
 import { Toolbar } from '@/components/Toolbar';
 import { AddressGrid } from '@/components/AddressGrid';
-import classNames from 'classnames';
 
-const App = () => {
+function App() {
   return (
     <div className={classNames('p-centered', 'text-center')}>
       <h1>Address Book</h1>
@@ -13,6 +13,6 @@ const App = () => {
       <AddressGrid />
     </div>
   );
-};
+}
 
 export default App;
