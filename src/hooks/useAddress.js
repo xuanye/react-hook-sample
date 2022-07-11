@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useReducer } from 'react';
 import { createModel } from 'hox';
 import { ItemState, SortType } from '@/config/constants';
 import utility from '@/libs/utility';
@@ -35,11 +35,60 @@ const initialAddressList = [
     status: 0,
   },
 ];
+const REMOVE_ITEM = 'REMOVE_ITEM';
+const ADD_ITEM = 'ADD_ITEM';
+const EDIT_ITEM = 'EDIT_ITEM';
+const CANCEL_SAVE = 'CANCEL_SAVE';
+const SUBMIT_SAVE = 'SUBMIT_SAVE';
+
+const dispatchReducer = (state, action) => {
+  switch (action.type) {
+    case REMOVE_ITEM:
+      state.splice(action.index, 1);
+      return [...state];
+    case ADD_ITEM:
+      return [
+        ...state,
+        action.data || {
+          id: generateId(),
+          name: '',
+          email: '',
+          address: '',
+          status: 1,
+        },
+      ];
+    case EDIT_ITEM:
+      return state.map((item, i) => {
+        item.status = i == action.index ? 2 : 0;
+        return item;
+      });
+    case CANCEL_SAVE:
+      if (action.data.status == ItemState.AddNew) {
+        state.splice(state.length - 1, 1);
+        return [...state];
+      }
+      return state.map(item => {
+        item.status = 0;
+        return item;
+      });
+    case SUBMIT_SAVE:
+      return state.map((item, i) => {
+        item.status = ItemState.Default;
+        if (i == action.index) {
+          item.name = action.data.name;
+          item.email = action.data.email;
+          item.address = action.data.address;
+        }
+        return item;
+      });
+  }
+};
 
 const useAddress = () => {
   const [editMode, setEditMode] = useState(false);
   const [sortType, setSortType] = useState(0);
-  const [addressList, setAddressList] = useState(initialAddressList);
+
+  const [addressList, dispatchAddress] = useReducer(dispatchReducer, initialAddressList);
 
   const sortedList = useMemo(() => {
     switch (sortType) {
@@ -54,66 +103,24 @@ const useAddress = () => {
 
   const startAddItem = data => {
     setEditMode(true);
-
-    setAddressList(list => [
-      ...list,
-      data || {
-        id: generateId(),
-        name: '',
-        email: '',
-        address: '',
-        status: 1,
-      },
-    ]);
+    dispatchAddress({ type: ADD_ITEM, data });
   };
   const removeItem = index => {
-    setAddressList(list => {
-      list.splice(index, 1);
-      return [...list];
-    });
+    dispatchAddress({ type: REMOVE_ITEM, index });
   };
 
   const startEditItem = index => {
+    dispatchAddress({ type: EDIT_ITEM, index });
     setEditMode(true);
-
-    setAddressList(list =>
-      list.map((item, i) => {
-        item.status = i == index ? 2 : 0;
-        return item;
-      }),
-    );
   };
 
   const confirmEditItem = (index, data) => {
-    setAddressList(list =>
-      list.map((item, i) => {
-        item.status = ItemState.Default;
-        if (i == index) {
-          item.name = data.name;
-          item.email = data.email;
-          item.address = data.address;
-        }
-        return item;
-      }),
-    );
+    dispatchAddress({ type: SUBMIT_SAVE, index, data });
     setEditMode(false);
   };
 
   const cancelSaveItem = data => {
-    if (data.status == ItemState.AddNew) {
-      // 新增
-      setAddressList(list => {
-        list.splice(list.length - 1, 1);
-        return [...list];
-      });
-    } else {
-      setAddressList(list =>
-        list.map(item => {
-          item.status = 0;
-          return item;
-        }),
-      );
-    }
+    dispatchAddress({ type: CANCEL_SAVE, data });
     setEditMode(false);
   };
 
