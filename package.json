@@ -21,6 +21,7 @@
     "spectre.css": "^0.5.9"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@vitejs/plugin-react": "^1.3.2",

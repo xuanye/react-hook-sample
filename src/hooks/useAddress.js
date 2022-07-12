@@ -5,7 +5,7 @@ import utility from '@/libs/utility';
 
 const { ascCompare, descCompare, generateId } = utility;
 
-const initialAddressList = [
+export const initialAddressList = [
   {
     id: '1',
     name: 'Tom',
@@ -35,13 +35,13 @@ const initialAddressList = [
     status: 0,
   },
 ];
-const REMOVE_ITEM = 'REMOVE_ITEM';
-const ADD_ITEM = 'ADD_ITEM';
-const EDIT_ITEM = 'EDIT_ITEM';
-const CANCEL_SAVE = 'CANCEL_SAVE';
-const SUBMIT_SAVE = 'SUBMIT_SAVE';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const ADD_ITEM = 'ADD_ITEM';
+export const EDIT_ITEM = 'EDIT_ITEM';
+export const CANCEL_SAVE = 'CANCEL_SAVE';
+export const SUBMIT_SAVE = 'SUBMIT_SAVE';
 
-const dispatchReducer = (state, action) => {
+export const dispatchReducer = (state, action) => {
   switch (action.type) {
     case REMOVE_ITEM:
       state.splice(action.index, 1);
