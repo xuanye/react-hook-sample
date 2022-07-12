@@ -59,28 +59,33 @@ const dispatchReducer = (state, action) => {
       ];
     case EDIT_ITEM:
       return state.map((item, i) => {
-        item.status = i == action.index ? 2 : 0;
-        return item;
+        const ret = { ...item };
+        ret.status = i === action.index ? 2 : 0;
+        return ret;
       });
     case CANCEL_SAVE:
-      if (action.data.status == ItemState.AddNew) {
+      if (action.data.status === ItemState.AddNew) {
         state.splice(state.length - 1, 1);
         return [...state];
       }
-      return state.map(item => {
-        item.status = 0;
-        return item;
+      return state.map((item) => {
+        const ret = { ...item };
+        ret.status = 0;
+        return ret;
       });
     case SUBMIT_SAVE:
       return state.map((item, i) => {
-        item.status = ItemState.Default;
-        if (i == action.index) {
-          item.name = action.data.name;
-          item.email = action.data.email;
-          item.address = action.data.address;
+        const ret = { ...item };
+        ret.status = ItemState.Default;
+        if (i === action.index) {
+          ret.name = action.data.name;
+          ret.email = action.data.email;
+          ret.address = action.data.address;
         }
-        return item;
+        return ret;
       });
+    default:
+      return state;
   }
 };
 
@@ -101,15 +106,15 @@ const useAddress = () => {
     }
   }, [sortType, addressList]);
 
-  const startAddItem = data => {
+  const startAddItem = (data) => {
     setEditMode(true);
     dispatchAddress({ type: ADD_ITEM, data });
   };
-  const removeItem = index => {
+  const removeItem = (index) => {
     dispatchAddress({ type: REMOVE_ITEM, index });
   };
 
-  const startEditItem = index => {
+  const startEditItem = (index) => {
     dispatchAddress({ type: EDIT_ITEM, index });
     setEditMode(true);
   };
@@ -119,7 +124,7 @@ const useAddress = () => {
     setEditMode(false);
   };
 
-  const cancelSaveItem = data => {
+  const cancelSaveItem = (data) => {
     dispatchAddress({ type: CANCEL_SAVE, data });
     setEditMode(false);
   };

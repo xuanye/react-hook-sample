@@ -1,13 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useForm } from 'react-hook-form';
-import useAddress from '@/hooks/useAddress';
+import PropTypes from 'prop-types';
 
+import useAddress from '@/hooks/useAddress';
 import classes from './index.module.css';
 
 const addressList = ['', 'Shanghai', 'Chengdu', 'Beijing', 'Chongqing', 'Guangzhou'];
 function AddressForm({ item, index }) {
-  const { confirmEditItem, cancelSaveItem } = useAddress(model => [
+  const { confirmEditItem, cancelSaveItem } = useAddress((model) => [
     model.cancelSaveItem,
     model.confirmEditItem,
   ]);
@@ -20,7 +21,7 @@ function AddressForm({ item, index }) {
     defaultValues: item,
   });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     confirmEditItem(index, data);
   };
   const handleCancel = () => cancelSaveItem(item);
@@ -56,7 +57,7 @@ function AddressForm({ item, index }) {
               className={classNames('form-select', errors.address ? 'is-error' : null)}
               {...register('address', { required: true })}
             >
-              {addressList.map(address => {
+              {addressList.map((address) => {
                 if (!address) {
                   return (
                     <option value='' key='please choose'>
@@ -116,5 +117,14 @@ function AddressForm({ item, index }) {
     </div>
   );
 }
+
+AddressForm.propTypes = {
+  item: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default AddressForm;

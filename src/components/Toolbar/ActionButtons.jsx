@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 function ActionButtons({ editMode, startAddItem, setSortType }) {
   const handlerAscSort = () => {
@@ -14,7 +15,8 @@ function ActionButtons({ editMode, startAddItem, setSortType }) {
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}
-        onClick={() => startAddItem()}>
+        onClick={() => startAddItem()}
+      >
         Add New
       </button>
 
@@ -22,18 +24,26 @@ function ActionButtons({ editMode, startAddItem, setSortType }) {
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}
-        onClick={handlerAscSort}>
+        onClick={handlerAscSort}
+      >
         A-Z ↑
       </button>
       <button
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}
-        onClick={handlerDescSort}>
+        onClick={handlerDescSort}
+      >
         Z-A ↓
       </button>
     </div>
   );
 }
+
+ActionButtons.propTypes = {
+  editMode: PropTypes.bool.isRequired,
+  startAddItem: PropTypes.func.isRequired,
+  setSortType: PropTypes.func.isRequired,
+};
 
 export default ActionButtons;

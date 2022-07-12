@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import useFilterText from '@/hooks/useFilterText';
+import PropTypes from 'prop-types';
 
 function FilterInput({ editMode }) {
   const { filterText, setFilterText } = useFilterText();
@@ -16,7 +17,7 @@ function FilterInput({ editMode }) {
         style={{ maxWidth: '300px' }}
         type='text'
         value={filterText}
-        onChange={e => {
+        onChange={(e) => {
           setFilterText(e.target.value || '');
         }}
         disabled={editMode}
@@ -25,5 +26,7 @@ function FilterInput({ editMode }) {
     </div>
   );
 }
-
+FilterInput.propTypes = {
+  editMode: PropTypes.bool.isRequired,
+};
 export default FilterInput;

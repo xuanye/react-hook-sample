@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 export const MarkText = memo(({ originalText, markText }) => {
   const result = useMemo(() => {
@@ -40,3 +41,7 @@ export const MarkText = memo(({ originalText, markText }) => {
 });
 
 MarkText.displayName = 'MarkText';
+MarkText.propTypes = {
+  originalText: PropTypes.string.isRequired,
+  markText: PropTypes.string.isRequired,
+};

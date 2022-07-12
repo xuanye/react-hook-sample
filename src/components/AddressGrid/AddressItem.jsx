@@ -1,11 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import useAddress from '@/hooks/useAddress';
 import classes from './index.module.css';
 import { MarkText } from '../MarkText';
 
 function AddressItem({ item, markText, index }) {
-  const { startEditItem, removeItem, editMode } = useAddress(model => [
+  const { startEditItem, removeItem, editMode } = useAddress((model) => [
     model.startEditItem,
     model.removeItem,
     model.editMode,
@@ -43,7 +44,8 @@ function AddressItem({ item, markText, index }) {
           className={classNames('btn', 'mx-1', 'my-2')}
           style={{ minWidth: '80px' }}
           disabled={editMode}
-          onClick={handleEdit}>
+          onClick={handleEdit}
+        >
           Edit
         </button>
         <button
@@ -51,12 +53,23 @@ function AddressItem({ item, markText, index }) {
           className={classNames('btn', 'btn-link', 'mx-1', 'my-2')}
           style={{ minWidth: '80px' }}
           disabled={editMode}
-          onClick={handleRemove}>
+          onClick={handleRemove}
+        >
           Remove
         </button>
       </div>
     </div>
   );
 }
+
+AddressItem.propTypes = {
+  item: PropTypes.shape({
+    name: PropTypes.string,
+    address: PropTypes.string,
+    email: PropTypes.string,
+  }).isRequired,
+  markText: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default AddressItem;
