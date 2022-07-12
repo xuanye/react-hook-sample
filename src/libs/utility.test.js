@@ -30,6 +30,8 @@ describe('compare()', () => {
 
     expect(utility.ascCompare(wrapName('a'), wrapName(''))).toBe(-1);
     expect(utility.ascCompare(wrapName(''), wrapName('b'))).toBe(1);
+
+    expect(utility.ascCompare(wrapName('A'), wrapName('a'))).toBe(0);
   });
 
   test('Desc Compare', () => {
@@ -41,13 +43,21 @@ describe('compare()', () => {
 
     expect(utility.descCompare(wrapName('a'), wrapName(''))).toBe(-1);
     expect(utility.descCompare(wrapName(''), wrapName('b'))).toBe(1);
+    expect(utility.descCompare(wrapName('A'), wrapName('a'))).toBe(0);
   });
+});
+test('generateId()', () => {
+  const id = utility.generateId();
+  expect(id).toBeDefined();
 });
 
 test('contains()', () => {
   const source = 'Abc@gg.com';
+  expect(utility.contains(source, '')).toBeTruthy();
   expect(utility.contains(source, 'a')).toBeTruthy();
   expect(utility.contains(source, 'A')).toBeTruthy();
   expect(utility.contains(source, '.com')).toBeTruthy();
   expect(utility.contains(source, 'f')).toBeFalsy();
+
+  expect(utility.contains('', 'f')).toBeFalsy();
 });
