@@ -12,7 +12,7 @@ function ActionButtons({ editMode, startAddItem, setSortType }) {
   return (
     <div className={classNames('column', 'col-6', 'text-right')}>
       <button
-        test-data-id='btnAdd'
+        data-test-id='btnAdd'
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}
@@ -22,7 +22,7 @@ function ActionButtons({ editMode, startAddItem, setSortType }) {
       </button>
 
       <button
-        test-data-id='btnAsc'
+        data-test-id='btnAsc'
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}
@@ -31,7 +31,7 @@ function ActionButtons({ editMode, startAddItem, setSortType }) {
         A-Z ↑
       </button>
       <button
-        test-data-id='btnDesc'
+        data-test-id='btnDesc'
         type='button'
         className={classNames('btn', 'mx-1')}
         disabled={editMode}

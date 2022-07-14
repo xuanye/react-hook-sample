@@ -37,9 +37,9 @@ describe('ActionButtons', () => {
     const element = create(
       <ActionButtons editMode={false} startAddItem={mockStartAdd} setSortType={mockSetSortType} />
     );
-    const btnAdd = element.root.findByProps({ 'test-data-id': 'btnAdd' });
-    const btnAsc = element.root.findByProps({ 'test-data-id': 'btnAsc' });
-    const btnDesc = element.root.findByProps({ 'test-data-id': 'btnDesc' });
+    const btnAdd = element.root.findByProps({ 'data-test-id': 'btnAdd' });
+    const btnAsc = element.root.findByProps({ 'data-test-id': 'btnAsc' });
+    const btnDesc = element.root.findByProps({ 'data-test-id': 'btnDesc' });
 
     btnAdd.props.onClick();
     expect(mockStartAdd).toHaveBeenCalled();
